@@ -10,16 +10,16 @@
 
 <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <div id="app">
-    </div>
+
+    <div id="app"></div>
     <script>
         const vm = Vue.createApp({
             data() {
                 return {
-                    text: "<h1>Hola vue</h1>"
+                    img: " https://picsum.photos/200/300"
                 }
             },
-            template: `<div v-html="text"></div>`
+            template: `<img v-bind:src="img" v-bind:alt="img">`
         }).mount("#app")
     </script>
 </body>
