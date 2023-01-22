@@ -16,15 +16,28 @@
         Vue.createApp({
             data() {
                 return {
-                    counter: 0
+                    initialValue: 0,
+                    counter: initialValue
                 }
             },
             methods: {
-                increment() {
+                increase() {
                     this.counter++;
+                },
+                decrease() {
+                    this.counter--;
+                },
+                reset() {
+                    this.counter = initialValue;
                 }
+
             },
-            template: `<button v-on:click="increment"> {{ counter }} </button>`
+            template: `
+            <button @click="increase"> + </button>
+            <span> {{ counter }} </span>
+            <button v-on:click="decrease"> {{ counter }} </button><br>
+            <button @keyup="reset" style="margin:auto;>Press any key to reset</button>
+            `
         }).mount("#app")
     </script>
 </body>
