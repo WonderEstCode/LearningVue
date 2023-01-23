@@ -8,36 +8,22 @@
     <title>CUBERS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="grey darken-4">
+<body id="app" class="grey darken-4">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-        const vm = Vue.createApp({
-            data() {
-                return {
-                    counter: "hola probando"
-                };
-            },
-            template: `<div>{{ counter }}</div>`
-        }).mount("#app");
-    </script>
-    <div id="app">
-        {{ counter }}
-    </div>
     <nav>
         <div class="nav-wrapper black">
             <a href="#!" class="brand-logo"><i class="large material-icons">grid_on</i>CUBERS</a>
             <ul class="right">
-                <li><a class="waves-effect waves-light btn red"><i
-                            class="medium material-icons">shopping_cart</i>Button</a>
+                <li><a class="waves-effect waves-light btn red">
+                        <i class="medium material-icons">shopping_cart</i>Button</a>
                 </li>
             </ul>
         </div>
     </nav>
-    <divclass="container grey darken-3">
+    <div class="container grey darken-3">
         <h4 class="white-text black" style="text-align: center;">BUY THE BEST RUBICK CUBES IN THE MARKET</h4>
         <div class="row container">
             <div class="col s12 m4 grey darken-3">
@@ -45,41 +31,127 @@
                     <div class="card-image">
                         <img
                             src="https://exitocol.vtexassets.com/arquivos/ids/12731832/gan-12-maglev-frosted-cubo-rubik-3x3-speedcube-original.jpg?v=637874479421930000">
-                        <button class="vue btn-floating halfway-fab waves-effect waves-light red"><i
+                        <button @click="addToCar" class="vue btn-floating halfway-fab waves-effect waves-light red"><i
+                                class="material-icons">add</i>
+                        </button>
+
+                    </div>
+                    <div class="card-title grey darken-3 white-text">{{ Allproducts[0].name }}</div>
+                    <div class="card-content grey darken-3 white-text">Price: {{ Allproducts[0].price }}</div>
+                </div>
+            </div>
+            <div class="col s12 m4 grey darken-3">
+                <div class="card col s12 m12 grey darken-4">
+                    <div class="card-image">
+                        <img src="https://http2.mlstatic.com/D_NQ_NP_925438-CBT50776584876_072022-O.webp">
+                        <button class="btn-floating halfway-fab waves-effect waves-light red"><i
                                 class="material-icons">add</i>
                         </button>
                     </div>
-                    <div class="card-title grey darken-3 white-text">Cubo Rubick Gan</div>
+                    <div class="card-title grey darken-3 white-text">{{ Allproducts[1].name }}</div>
+                    <div class="card-content grey darken-3 white-text">Price: {{ Allproducts[1].price }}</div>
+
                 </div>
             </div>
             <div class="col s12 m4 grey darken-3">
                 <div class="card col s12 m12 grey darken-4">
                     <div class="card-image">
-                        <img
-                            src="https://exitocol.vtexassets.com/arquivos/ids/12731832/gan-12-maglev-frosted-cubo-rubik-3x3-speedcube-original.jpg?v=637874479421930000">
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
+                        <img src="https://wowcube.com/images/wowcube-preview.jpg">
+                        <button class="btn-floating halfway-fab waves-effect waves-light red"><i
                                 class="material-icons">add</i>
-                        </a>
+                        </button>
                     </div>
-                    <div class="card-title grey darken-3 white-text">Cubo Rubick Gan</div>
-                </div>
-            </div>
-            <div class="col s12 m4 grey darken-3">
-                <div class="card col s12 m12 grey darken-4">
-                    <div class="card-image">
-                        <img
-                            src="https://exitocol.vtexassets.com/arquivos/ids/12731832/gan-12-maglev-frosted-cubo-rubik-3x3-speedcube-original.jpg?v=637874479421930000">
-                        <a class="btn-floating halfway-fab waves-effect waves-light red"><i
-                                class="material-icons">add</i>
-                        </a>
-                    </div>
-                    <div class="card-title grey darken-3 white-text">Cubo Rubick Gan</div>
+                    <div class="card-title grey darken-3 white-text">{{ Allproducts[2].name }}</div>
+                    <div class="card-content grey darken-3 white-text">Price: {{ Allproducts[2].price }}</div>
                 </div>
             </div>
 
         </div>
-        </div>
-        </div>
+    </div>
+    <div class="container white">
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>quantity</th>
+                    <th>total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-for="product in Allproducts">
+                    <td>
+                        {{ product.name }}
+                    </td>
+                    <td>
+                        {{ product.price}}
+                    </td>
+                    <td>
+                        {{ quantity }}
+                        <button @click="removeToCar" class="btn-floating btn-small waves-effect waves-light red"><i
+                                class="tiny material-icons">exposure_neg_1</i>>
+                        </button>
+                    </td>
+                    <td>
+                        {{ product.total }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
+
+<script>
+    const { createApp } = Vue;
+    const configuration = {
+        data() {
+            return {
+                add: false,
+                Allproducts: [{
+                    name: "GAN 12 M",
+                    price: 360000,
+                    total: 0
+                },
+                {
+                    name: "Shashibo",
+                    price: 266918,
+                    total: 0
+                },
+                {
+                    name: "wowcube",
+                    price: 1838000,
+                    total: 0
+                }],
+                quantity: 0
+            };
+        },
+        methods: {
+            removeToCar() {
+                return this.quantity--
+            },
+            addToCar() {
+                add = true
+                return this.quantity++
+            }
+        },
+        watch: {
+            quantity() {
+                if (this.quantity <= 0) {
+                    this.quantity = 0
+                }
+            }
+        },
+        computed: {
+            forTotal() {
+                if (this.add) {
+                    console.log("probando")
+                }
+            }
+        }
+    };
+
+    createApp(configuration).mount("#app");
+</script>
 
 </html>
